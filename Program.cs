@@ -41,7 +41,7 @@ void WorkDay()
     WriteLine();
     WriteLine(month.ToUpper());
     WriteLine(" пн. вт. ср. чт. пт. сб. вс.");
-    for(int i = 1; i < firstWeekDayNumber; i++)
+    for(int i = 0; i < firstWeekDayNumber; i++)
     {
         Write("    ");
     }
@@ -50,9 +50,9 @@ void WorkDay()
     {
         Write($"{day,4}");
         weekDayNumber++;
-        if(weekDayNumber > 7)
+        if(weekDayNumber == 7)
         {
-            weekDayNumber = 1;
+            weekDayNumber = 0;
             WriteLine();
         }
     }
