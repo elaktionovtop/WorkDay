@@ -4,6 +4,7 @@
 */
 
 using static System.Console;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 WriteTitle("Рабочий/нерабочий день");
 
@@ -22,12 +23,16 @@ ExitApp();
 
 void WorkDay()
 {
-    int dayNumber = EnterInteger("Введите номер дня месяца (1-28): ");
-    int remainder = dayNumber % 7;
-    if (remainder == 0 || remainder == 1)
-        WriteLine("Выходной день");
-    else
-        WriteLine("Рабочий день");
+    string month = EnterText("Введите название месяца: ");
+    int daysNumber = EnterInteger("Введите количество дней в месяце: ");
+    int firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
+    WriteLine(month.ToUpper());
+    for (int day = 1; day <= daysNumber; day++)
+    {
+        Write($"{day, 4}");
+        if (day % 7 == 0)
+            WriteLine();
+    }
 }
 
 int EnterInteger(string prompt)
@@ -40,6 +45,17 @@ int EnterInteger(string prompt)
         result = int.TryParse(ReadLine(), out number);
     }
     return number;
+}
+
+string EnterText(string prompt)
+{
+    Write(prompt);
+    string text = ReadLine();
+    while(string.IsNullOrEmpty(text))
+    {
+        Write($"Некорректный ввод. {prompt}");
+    }
+    return text;
 }
 
 void WriteTitle(string title)
