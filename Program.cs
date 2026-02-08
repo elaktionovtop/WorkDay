@@ -2,6 +2,17 @@
 Пользователь вводит число месяца.
 Вывести для этого дня: выходной / рабочий день.
 */
+/*
+ввести месяц, количество дней, номер дня недели для 1-го числа месяца
+цикл от 1 до дня недели начала месяца - 1
+    вывести пробелы
+цикл от 1 до конца месяца
+    вывести число
+    к дню недели прибавить 1
+    если день недели больше 7
+        установить день недели в 1
+        перейти на новую строку
+*/
 
 using static System.Console;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -26,12 +37,24 @@ void WorkDay()
     string month = EnterText("Введите название месяца: ");
     int daysNumber = EnterInteger("Введите количество дней в месяце: ");
     int firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
+
+    WriteLine();
     WriteLine(month.ToUpper());
-    for (int day = 1; day <= daysNumber; day++)
+    WriteLine(" пн. вт. ср. чт. пт. сб. вс.");
+    for(int i = 1; i < firstWeekDayNumber; i++)
     {
-        Write($"{day, 4}");
-        if (day % 7 == 0)
+        Write("    ");
+    }
+    int weekDayNumber = firstWeekDayNumber;
+    for(int day = 1; day <= daysNumber; day++)
+    {
+        Write($"{day,4}");
+        weekDayNumber++;
+        if(weekDayNumber > 7)
+        {
+            weekDayNumber = 1;
             WriteLine();
+        }
     }
 }
 
