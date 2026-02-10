@@ -12,9 +12,16 @@
     если день недели больше 7
         установить день недели в 1
         перейти на новую строку
+ввести число месяца
+вывести название дня недели цветом:
+    понедельник - черный
+    вторник, среда, четверг - синий
+    пятница - зеленый
+    суббота, воскресенье - красный
 */
 
 using static System.Console;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 WriteTitle("Рабочий/нерабочий день");
@@ -38,6 +45,14 @@ void WorkDay()
     int daysNumber = EnterInteger("Введите количество дней в месяце: ");
     int firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
 
+    WriteMonth(month, daysNumber, firstWeekDayNumber);
+    
+    int dayNumber = EnterInteger("Введите число месяца: ");
+    WriteDayOfWeek(month, dayNumber, firstWeekDayNumber);
+}
+
+void WriteMonth(string month, int daysNumber, int firstWeekDayNumber)
+{
     WriteLine();
     WriteLine(month.ToUpper());
     WriteLine(" пн. вт. ср. чт. пт. сб. вс.");
@@ -56,6 +71,35 @@ void WorkDay()
             WriteLine();
         }
     }
+    WriteLine();
+}
+
+void WriteDayOfWeek(string month, int dayNumber, int firstWeekDayNumber)
+{
+    string[] weekDays = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", 
+        "Суббота", "Воскресенье" };
+    int weekDayNumber = (firstWeekDayNumber + dayNumber - 1) % 7;
+    switch(weekDayNumber)
+    {
+        case 1:
+            ForegroundColor = ConsoleColor.Black;
+            BackgroundColor = ConsoleColor.White;
+            break;
+        case 2:
+        case 3:
+        case 4:
+            ForegroundColor = ConsoleColor.Blue;
+            break;
+        case 5:
+            ForegroundColor = ConsoleColor.Green;
+            break;
+        case 6:
+        case 0:
+            ForegroundColor = ConsoleColor.Red;
+            break;
+    }
+    WriteLine($"{month}, {dayNumber}: {weekDays[weekDayNumber]}");
+    ResetColor();
 }
 
 int EnterInteger(string prompt)
@@ -77,6 +121,7 @@ string EnterText(string prompt)
     while(string.IsNullOrEmpty(text))
     {
         Write($"Некорректный ввод. {prompt}");
+        text = ReadLine();
     }
     return text;
 }
